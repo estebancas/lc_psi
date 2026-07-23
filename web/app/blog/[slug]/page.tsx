@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PortableText } from "next-sanity";
@@ -24,7 +25,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({
+async function BlogPostContent({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -35,7 +36,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-20">
+    <>
       <p className="text-xs uppercase tracking-wide opacity-50">
         {post.type === "articulo" ? "Artículo" : "Actualización"} · {post.date}
       </p>
@@ -43,6 +44,20 @@ export default async function BlogPostPage({
       <div className="prose mt-6 max-w-none leading-relaxed opacity-80">
         <PortableText value={post.body} />
       </div>
+    </>
+  );
+}
+
+export default function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  return (
+    <article className="mx-auto max-w-3xl px-6 py-20">
+      <Suspense fallback={null}>
+        <BlogPostContent params={params} />
+      </Suspense>
     </article>
   );
 }
