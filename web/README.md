@@ -22,6 +22,18 @@ Hybrid landing page + dynamic blog/content feed for **Laura Castro Cordero**, ps
 
 Bootstrapped via `create-next-app`. No custom pages, components, or Sanity integration built yet.
 
+## Site structure (decided)
+
+Routes:
+- `/` — single-page scroll landing: Hero, Sobre mí, Servicios, Blog preview (latest posts), Testimonios (optional), Contacto, Footer. Sticky nav w/ anchor links, `Blog` links out to `/blog`.
+- `/blog` — unified feed, **all posts in one place** (long-form articles + short Twitter-like updates mixed together, no separate route for short posts).
+- `/blog/[slug]` — individual post page (own URL per post, drives SEO).
+
+Contact: form **+** WhatsApp **+** phone direct (not form-only).
+
+Content ownership (Sanity):
+- Services: **start as hardcoded placeholders**, but design schema so they (and as much other content as possible — services, posts, site copy) move into Sanity over time. Default to Sanity-driven over hardcoded when adding new content types.
+
 ## Important: Next.js version note
 
 This repo runs **Next.js 16**, which has breaking changes vs. older Next.js knowledge (APIs, conventions, file structure may differ). Before writing Next.js code, check `node_modules/next/dist/docs/` for current APIs and heed deprecation notices. (See `AGENTS.md`.)

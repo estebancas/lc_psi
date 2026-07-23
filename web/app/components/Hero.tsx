@@ -1,0 +1,35 @@
+import Link from "next/link";
+
+export default function Hero() {
+  return (
+    <section className="mx-auto flex max-w-5xl flex-col-reverse items-center gap-10 px-6 py-20 md:flex-row">
+      <div className="flex flex-1 flex-col items-center gap-6 text-center md:items-start md:text-left">
+        <h1 className="max-w-xl text-4xl font-semibold leading-tight tracking-tight">
+          Terapia psicológica con un enfoque humano
+        </h1>
+        <p className="max-w-md text-lg opacity-80">
+          Acompañamiento profesional para tu bienestar emocional. Sesiones
+          individuales, de pareja y para adolescentes.
+        </p>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/#contacto"
+            className="rounded-full bg-foreground px-6 py-3 text-center text-background transition-opacity hover:opacity-80"
+          >
+            Agendar una cita
+          </Link>
+          <Link
+            href="/#servicios"
+            className="rounded-full border border-black/15 px-6 py-3 text-center transition-colors hover:bg-black/[.04] dark:border-white/20 dark:hover:bg-white/[.06]"
+          >
+            Ver servicios
+          </Link>
+        </div>
+      </div>
+
+      <div className="flex aspect-square w-48 flex-shrink-0 items-center justify-center rounded-full bg-black/5 text-sm opacity-50 dark:bg-white/10 md:w-64">
+        Foto
+      </div>
+    </section>
+  );
+}

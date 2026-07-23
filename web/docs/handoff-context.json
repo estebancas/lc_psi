@@ -1,0 +1,30 @@
+{
+  "completed_tasks": [
+    "Wrote README.md capturing project purpose, stack, Next.js 16 breaking-changes note, Spanish-content rule, and decided site structure/roadmap",
+    "Decided and documented site architecture: '/' single-scroll landing (Hero, Sobre mí, Servicios, Blog preview, Contacto, Footer) with sticky anchor nav; '/blog' unified feed (long articles + short Twitter-like posts mixed, no separate route); '/blog/[slug]' per-post SEO pages; Contact = form + WhatsApp + phone",
+    "Decided content-ownership rule: services/posts start as hardcoded placeholders but move to Sanity over time — prefer Sanity schema over hardcoded arrays when adding new content types going forward",
+    "Scaffolded lib/services.ts (getServices()) and lib/posts.ts (getPosts, getLatestPosts, getPostBySlug) with placeholder Spanish data, written as swap-ready functions for future Sanity backing",
+    "Scaffolded app/components/: Header.tsx (sticky nav, anchor links to /#sobre-mi /#servicios /#contacto, JS-free mobile menu via <details>), Footer.tsx, Hero.tsx, About.tsx, Services.tsx, BlogPreview.tsx, Contact.tsx (form UI + WhatsApp/tel/email links, form not wired to backend)",
+    "Rewrote app/layout.tsx: lang=\"es\", Spanish metadata, wraps children with Header+Footer",
+    "Rewrote app/page.tsx to compose Hero/About/Services/BlogPreview/Contact",
+    "Added app/blog/page.tsx (list) and app/blog/[slug]/page.tsx (detail, uses async params per Next 16 convention, generateStaticParams + generateMetadata)",
+    "Verified: npx tsc --noEmit clean, npm run build clean (all routes static: / , /blog, /blog/[slug] x3 SSG), dev server smoke-tested 200 on /, /blog, /blog/bienvenida-al-blog",
+    "Saved memory files at ~/.claude/projects/-Users-oredrok-Projects-Personal-lc-psi/memory/: MEMORY.md index + project_lc-psi_overview.md (project overview, Spanish-content rule, site structure decisions, Sanity-ownership rule)"
+  ],
+  "current_state": "Landing page + blog fully scaffolded with placeholder Spanish content, no Sanity integration yet. Repo root: /Users/oredrok/Projects/Personal/lc-psi, branch main, all changes uncommitted (git status was clean before this session's edits — nothing committed yet, no commit was requested). Key files: README.md (project context + decisions), app/layout.tsx, app/page.tsx, app/components/{Header,Footer,Hero,About,Services,BlogPreview,Contact}.tsx, app/blog/page.tsx, app/blog/[slug]/page.tsx, lib/services.ts, lib/posts.ts. Build and typecheck both pass. Contact.tsx has placeholder phone/WhatsApp/email (whatsappNumber '5210000000000', phoneNumber '+52 55 0000 0000', email 'contacto@lauracastro.mx') and an unwired <form> (no onSubmit/backend). About.tsx bio is a literal placeholder string asking to be filled in. Sanity.io dependency is NOT yet installed (package.json unchanged) — still just a stated intent in README/roadmap.",
+  "issues_discovered": [
+    "Next.js 16 requires params as Promise in dynamic routes (must await params) — already handled correctly in app/blog/[slug]/page.tsx per node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/dynamic-routes.md",
+    "AGENTS.md mandates checking node_modules/next/dist/docs/ before writing Next.js code since this Next 16 has breaking changes vs typical training data knowledge",
+    "CLAUDE.md active caveman-mode hook affects prose responses only, not code/commits — irrelevant to future sessions unless hook still enabled"
+  ],
+  "next_steps": [
+    "Get real contact info from user (WhatsApp number, phone, email) and replace placeholders in app/components/Contact.tsx",
+    "Get real bio content from Laura for app/components/About.tsx (credentials, cédula profesional, enfoque terapéutico, years of experience)",
+    "Decide and wire contact form backend (e.g. API route + email service, or form provider) — currently just markup with no onSubmit",
+    "Install and configure Sanity.io: schema for posts (articulo/actualizacion matching lib/posts.ts shape) and services (matching lib/services.ts shape), then swap lib/posts.ts and lib/services.ts internals to fetch from Sanity while keeping existing function signatures (getServices, getPosts, getLatestPosts, getPostBySlug)",
+    "Add real hero photo (currently a placeholder circular div with text 'Foto' in Hero.tsx) — replace with next/image once asset available",
+    "Add SEO structured data (JSON-LD for LocalBusiness/Person) and refine per-page metadata beyond the current basic title/description",
+    "Consider testimonials section (marked optional in decided layout, not yet built)",
+    "No commits made this session — review changes and commit when ready"
+  ]
+}
