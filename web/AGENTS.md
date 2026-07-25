@@ -16,6 +16,14 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 Route table check: `next build` should show every route as `◐` (Partial Prerender) with `/blog/[slug]` fully resolved at build time. If a route reverts to blocking (`ƒ`) or a build error names `new Date()`/`Math.random()`/`cookies()`/`headers()` outside `<Suspense>`, that's this pattern breaking — fix inline, don't opt the route out, unless the read is genuinely new and needs its own product decision.
 
+Blog routes (`app/blog/page.tsx`, `app/blog/[slug]/page.tsx`) show a layout-matching skeleton
+(`app/components/PostListSkeleton.tsx`, `app/components/PostSkeleton.tsx`) as the `<Suspense>`
+fallback whenever they genuinely stream. These stay inline `<Suspense>` boundaries, not
+`loading.tsx` — a route-level `loading.js` would truncate prefetch to "layout to first loading
+boundary" (client cache TTL off by default) and turn today's fully-static `/blog/[slug]` shell into
+a full-page fallback on every navigation. See `node_modules/next/dist/docs/01-app/02-guides/streaming.md`
+("When to use `loading.js` vs `<Suspense>`") before converting.
+
 Next.js is pinned to 16.2.x (16.3, needed for Partial Prefetching / `export const instant` tooling, isn't stable yet — only on `canary`). Don't jump to canary without checking with the user; this is a live client site.
 
 ## E2E tests
