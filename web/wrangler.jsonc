@@ -1,0 +1,21 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "lc-psi-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-24",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // CONTACT_WORKER_URL is not secret (just the worker's URL) — fill in the
+  // deployed email-worker URL before running `npm run deploy:cf`.
+  // CONTACT_WORKER_SECRET must NOT go here — set it with:
+  //   npx wrangler secret put CONTACT_WORKER_SECRET
+  "vars": {
+    "CONTACT_WORKER_URL": "https://lc-psi-email-worker.lauracastropsi25.workers.dev"
+  },
+  "routes": [{ "pattern": "psicologalauracastro.com", "custom_domain": true }]
+}
