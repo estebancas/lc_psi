@@ -10,7 +10,28 @@ export default defineConfig({
   projectId: 'c3ikd5qa',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Contenido')
+          .items([
+            S.listItem()
+              .title('Perfil y Configuración')
+              .id('profile')
+              .child(
+                S.document()
+                  .schemaType('profile')
+                  .documentId('profileSettings')
+              ),
+            S.divider(),
+            ...S.documentTypeListItems().filter(
+              (item) => item.getId() !== 'profile'
+            ),
+          ]),
+    }),
+    visionTool(),
+  ],
 
   schema: {
     types: schemaTypes,

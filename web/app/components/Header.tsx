@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getProfile } from "@/lib/profile";
 
 const links = [
   { label: "Inicio", href: "/" },
@@ -8,12 +9,15 @@ const links = [
   { label: "Contacto", href: "/#contacto" },
 ];
 
-export default function Header() {
+export default async function Header() {
+  const profile = await getProfile();
+  const name = profile?.name || "Laura Castro Cordero";
+
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-[var(--background)]/90 backdrop-blur dark:border-white/10">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link href="/" className="font-semibold">
-          Laura Castro Cordero
+          {name}
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm md:flex">

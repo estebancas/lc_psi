@@ -1,8 +1,12 @@
-const whatsappNumber = "5210000000000"; // placeholder, formato E.164 sin "+"
-const phoneNumber = "+52 55 0000 0000"; // placeholder
-const email = "contacto@lauracastro.mx"; // placeholder
+import { getProfile } from "@/lib/profile";
 
-export default function Contact() {
+export default async function Contact() {
+  const profile = await getProfile();
+
+  const whatsappNumber = profile?.whatsapp || "5210000000000";
+  const phoneNumber = profile?.phone || "+52 55 0000 0000";
+  const email = profile?.email || "contacto@lauracastro.mx";
+
   return (
     <section id="contacto" className="mx-auto max-w-5xl scroll-mt-20 px-6 py-20">
       <h2 className="text-2xl font-semibold">Contacto</h2>
