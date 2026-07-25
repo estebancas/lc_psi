@@ -2,10 +2,17 @@
 
 Site for Laura Castro Cordero, psicóloga. All user-facing text is Spanish — no exceptions.
 
-## Layout
+## Workspaces
 
-- `web/` — Next.js 16 (App Router) frontend. See `web/AGENTS.md` for its architecture and rendering strategy.
-- `studio/` — Sanity Studio, content editing for blog posts and site copy.
+npm workspaces monorepo. Install once from the repo root (`npm install`) — a single hoisted `node_modules` and one root `package-lock.json` serve all three packages.
+
+| Path            | Package name          | What it is                                                                                                                   | Dev                  |
+| --------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `web/`          | `lc-psi`               | Next.js 16 App Router frontend — the public site. Cache Components on; see `web/AGENTS.md` for the rendering strategy.        | `npm run dev:web`    |
+| `studio/`       | `lcpsi`                | Sanity Studio — content editing for blog posts, services, and profile copy. Sanity project `c3ikd5qa`, dataset `production`. | `npm run dev:studio` |
+| `email-worker/` | `lc-psi-email-worker`  | Cloudflare Worker behind the contact form. Sends mail via Email Routing's `send_email` binding; authenticated with `CONTACT_WORKER_SECRET`. | `npm run dev:worker` |
+
+Each workspace keeps its own `tsconfig.json` and eslint config — they target different runtimes (browser/Next, Studio, workerd) and should not be unified.
 
 ## Architecture focus: fast initial load
 
