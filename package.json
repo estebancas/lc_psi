@@ -14,6 +14,7 @@
     "build:studio": "npm run build -w ./studio",
     "deploy:web": "npm run deploy:cf -w ./web",
     "deploy:studio": "npm run deploy:cf -w ./studio",
+    "test:e2e": "npm run test:e2e -w ./web",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present"
   },

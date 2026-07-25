@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Gitignored OpenNext/Cloudflare build artifact — not covered by
+    // eslint-config-next's default ignores, so it gets linted whenever
+    // `npm run preview`/`deploy:cf` has produced it on disk.
+    ".open-next/**",
   ]),
 ]);
 
