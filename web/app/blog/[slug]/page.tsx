@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PortableText } from "next-sanity";
 import { getPostBySlug, getPosts } from "@/lib/posts";
+import PostSkeleton from "@/app/components/PostSkeleton";
 
 export async function generateStaticParams() {
   const posts = await getPosts();
@@ -55,7 +56,7 @@ export default function BlogPostPage({
 }) {
   return (
     <article className="mx-auto max-w-3xl px-6 py-20">
-      <Suspense fallback={null}>
+      <Suspense fallback={<PostSkeleton />}>
         <BlogPostContent params={params} />
       </Suspense>
     </article>
