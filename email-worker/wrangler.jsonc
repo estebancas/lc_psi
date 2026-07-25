@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lc-psi-email-worker",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-07-24",
+  // mimetext needs Node's Buffer/crypto shims.
+  "compatibility_flags": ["nodejs_compat"],
+  // Email Routing's send_email binding (free) — env.EMAIL.send(new EmailMessage(...)).
+  // Local dev writes emails to .wrangler/tmp/email/*.eml instead of sending.
+  "send_email": [{ "name": "EMAIL" }],
+  "vars": {
+    "FROM_EMAIL": "contacto@psicologalauracastro.com",
+    "RECIPIENT_EMAIL": "lauracastropsi25@gmail.com",
+    "ALLOWED_ORIGIN": "https://psicologalauracastro.com"
+  },
+  "dev": {
+    "port": 8788
+  }
+}

@@ -1,4 +1,5 @@
 import { getProfile } from "@/lib/profile";
+import ContactForm from "./ContactForm";
 
 export default async function Contact() {
   const profile = await getProfile();
@@ -12,32 +13,7 @@ export default async function Contact() {
       <h2 className="text-2xl font-semibold">Contacto</h2>
 
       <div className="mt-8 grid gap-10 md:grid-cols-2">
-        <form className="flex flex-col gap-4">
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre"
-            className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Correo electrónico"
-            className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
-          />
-          <textarea
-            name="mensaje"
-            placeholder="Mensaje"
-            rows={4}
-            className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
-          />
-          <button
-            type="submit"
-            className="rounded-full bg-foreground px-6 py-3 text-sm text-background transition-opacity hover:opacity-80"
-          >
-            Enviar mensaje
-          </button>
-        </form>
+        <ContactForm />
 
         <div className="flex flex-col gap-4 text-sm">
           <a
