@@ -10,9 +10,10 @@
   "send_email": [{ "name": "EMAIL" }],
   "vars": {
     "FROM_EMAIL": "contacto@psicologalauracastro.com",
-    "RECIPIENT_EMAIL": "lauracastropsi25@gmail.com",
-    "ALLOWED_ORIGIN": "https://psicologalauracastro.com"
+    "RECIPIENT_EMAIL": "lauracastropsi25@gmail.com"
   },
+  // CONTACT_WORKER_SECRET is a secret, not a var — set it with:
+  //   npx wrangler secret put CONTACT_WORKER_SECRET
   "dev": {
     "port": 8788
   }

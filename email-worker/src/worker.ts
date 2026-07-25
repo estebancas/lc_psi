@@ -13,22 +13,20 @@ function sanitize(input: string): string {
 	return input.trim().replace(/<[^>]*>/g, '').slice(0, 5000);
 }
 
-function corsHeaders(origin: string): HeadersInit {
-	return {
-		'Access-Control-Allow-Origin': origin,
-		'Access-Control-Allow-Methods': 'POST, OPTIONS',
-		'Access-Control-Allow-Headers': 'Content-Type',
-		'Access-Control-Max-Age': '86400',
-	};
+// Constant-time-ish compare so a mismatched secret doesn't leak length info via timing.
+function secretsMatch(a: string, b: string): boolean {
+	if (a.length !== b.length) return false;
+	let diff = 0;
+	for (let i = 0; i < a.length; i++) {
+		diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+	}
+	return diff === 0;
 }
 
-function json(body: unknown, status: number, origin: string): Response {
+function json(body: unknown, status: number): Response {
 	return new Response(JSON.stringify(body), {
 		status,
-		headers: {
-			'Content-Type': 'application/json',
-			...corsHeaders(origin),
-		},
+		headers: { 'Content-Type': 'application/json' },
 	});
 }
 
@@ -66,21 +64,24 @@ Enviado desde el formulario de contacto de psicologalauracastro.com`;
 }
 
 async function handleContact(request: Request, env: Env): Promise<Response> {
-	const origin = env.ALLOWED_ORIGIN;
+	const secret = request.headers.get('X-Contact-Secret') ?? '';
+	if (!secretsMatch(secret, env.CONTACT_WORKER_SECRET)) {
+		return json({ error: 'No autorizado' }, 401);
+	}
 
 	let data: ContactFormData;
 	try {
 		data = await request.json();
 	} catch {
-		return json({ error: 'JSON inválido' }, 400, origin);
+		return json({ error: 'JSON inválido' }, 400);
 	}
 
 	if (!data.nombre || !data.email || !data.mensaje) {
-		return json({ error: 'Faltan campos requeridos' }, 400, origin);
+		return json({ error: 'Faltan campos requeridos' }, 400);
 	}
 
 	if (!EMAIL_REGEX.test(data.email)) {
-		return json({ error: 'Correo electrónico inválido' }, 400, origin);
+		return json({ error: 'Correo electrónico inválido' }, 400);
 	}
 
 	const msg = createMimeMessage();
@@ -95,29 +96,24 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
 		await env.EMAIL.send(new EmailMessage(env.FROM_EMAIL, env.RECIPIENT_EMAIL, msg.asRaw()));
 	} catch (error) {
 		console.error('Error enviando correo:', error);
-		return json({ error: 'No se pudo enviar el mensaje' }, 500, origin);
+		return json({ error: 'No se pudo enviar el mensaje' }, 500);
 	}
 
-	return json({ success: true }, 200, origin);
+	return json({ success: true }, 200);
 }
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
-		const origin = env.ALLOWED_ORIGIN;
 
 		if (url.pathname !== '/contact') {
 			return new Response('Not Found', { status: 404 });
 		}
 
-		if (request.method === 'OPTIONS') {
-			return new Response(null, { headers: corsHeaders(origin) });
-		}
-
 		if (request.method !== 'POST') {
 			return new Response('Method Not Allowed', {
 				status: 405,
-				headers: { Allow: 'POST, OPTIONS', ...corsHeaders(origin) },
+				headers: { Allow: 'POST' },
 			});
 		}
 

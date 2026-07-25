@@ -1,56 +1,14 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useActionState } from "react";
+import { submitContact, type ContactState } from "@/lib/actions/contact";
 
-const WORKER_URL = process.env.NEXT_PUBLIC_CONTACT_WORKER_URL;
-
-type Status = "idle" | "sending" | "success" | "error";
+const initialState: ContactState = { status: "idle" };
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [state, formAction, isPending] = useActionState(submitContact, initialState);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (!WORKER_URL) {
-      setStatus("error");
-      setErrorMessage("El formulario no está disponible en este momento.");
-      return;
-    }
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = {
-      nombre: String(formData.get("nombre") ?? ""),
-      email: String(formData.get("email") ?? ""),
-      mensaje: String(formData.get("mensaje") ?? ""),
-    };
-
-    setStatus("sending");
-    setErrorMessage("");
-
-    try {
-      const response = await fetch(`${WORKER_URL}/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const body = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(body?.error || "No se pudo enviar el mensaje");
-      }
-
-      setStatus("success");
-      form.reset();
-    } catch (error) {
-      setStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "No se pudo enviar el mensaje");
-    }
-  }
-
-  if (status === "success") {
+  if (state.status === "success") {
     return (
       <p className="rounded-lg border border-black/15 px-4 py-6 text-sm dark:border-white/20">
         ¡Gracias por tu mensaje! Te responderé pronto.
@@ -59,13 +17,14 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form action={formAction} className="flex flex-col gap-4">
       <input
         type="text"
         name="nombre"
         placeholder="Nombre"
         required
-        disabled={status === "sending"}
+        disabled={isPending}
+        defaultValue={state.values?.nombre}
         className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
       />
       <input
@@ -73,7 +32,8 @@ export default function ContactForm() {
         name="email"
         placeholder="Correo electrónico"
         required
-        disabled={status === "sending"}
+        disabled={isPending}
+        defaultValue={state.values?.email}
         className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
       />
       <textarea
@@ -81,18 +41,19 @@ export default function ContactForm() {
         placeholder="Mensaje"
         rows={4}
         required
-        disabled={status === "sending"}
+        disabled={isPending}
+        defaultValue={state.values?.mensaje}
         className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
       />
       <button
         type="submit"
-        disabled={status === "sending"}
+        disabled={isPending}
         className="rounded-full bg-foreground px-6 py-3 text-sm text-background transition-opacity hover:opacity-80 disabled:opacity-50"
       >
-        {status === "sending" ? "Enviando..." : "Enviar mensaje"}
+        {isPending ? "Enviando..." : "Enviar mensaje"}
       </button>
-      {status === "error" && (
-        <p className="text-sm text-red-600 dark:text-red-400">{errorMessage}</p>
+      {state.status === "error" && (
+        <p className="text-sm text-red-600 dark:text-red-400">{state.message}</p>
       )}
     </form>
   );
