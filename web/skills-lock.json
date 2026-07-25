@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "skills": {
+    "next-cache-components-optimizer": {
+      "source": "vercel/next.js",
+      "ref": "canary",
+      "sourceType": "github",
+      "skillPath": "skills/next-cache-components-optimizer/SKILL.md",
+      "computedHash": "2310ed428a6d4e8fcf00dd915cd394f5c2789167acd1a009759293fc248307e1"
+    },
+    "next-partial-prefetching-adoption": {
+      "source": "vercel/next.js",
+      "ref": "canary",
+      "sourceType": "github",
+      "skillPath": "skills/next-partial-prefetching-adoption/SKILL.md",
+      "computedHash": "205d9b85cc5ff13d791b1b4290fee41f61901d04fff54ede212c28d19622e2b4"
+    }
+  }
+}
