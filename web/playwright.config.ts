@@ -19,10 +19,14 @@ export default defineConfig({
   // Flakiness here should fail loudly, not get papered over by a retry —
   // that's the whole point of removing the network dependency.
   retries: 0,
-  reporter: "html",
+  reporter: [["html", { open: "on-failure" }]],
   use: {
     baseURL: "http://127.0.0.1:3000",
-    trace: "on-first-retry",
+    // retries: 0 means "on-first-retry" would never fire — capture on
+    // failure directly instead, and drop the artifact for passing tests.
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
   },
   projects: [
     {
