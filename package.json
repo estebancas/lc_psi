@@ -12,6 +12,7 @@
     "dev:worker": "npm run dev -w ./email-worker",
     "build:web": "npm run build -w ./web",
     "build:studio": "npm run build -w ./studio",
+    "deploy:studio": "npm run deploy:cf -w ./studio",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present"
   },

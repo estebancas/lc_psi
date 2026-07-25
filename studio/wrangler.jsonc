@@ -1,0 +1,12 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "lc-psi-studio",
+  "compatibility_date": "2026-07-24",
+  // Static SPA only — sanity build output, no Worker code runs.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  // custom_domain:true provisions DNS + TLS on the zone automatically at deploy time.
+  "routes": [{ "pattern": "studio.psicologalauracastro.com", "custom_domain": true }]
+}
