@@ -4,9 +4,9 @@ async function fillContactForm(
   page: import("@playwright/test").Page,
   values: { nombre: string; email: string; mensaje: string },
 ) {
-  await page.getByPlaceholder("Nombre").fill(values.nombre);
-  await page.getByPlaceholder("Correo electrónico").fill(values.email);
-  await page.getByPlaceholder("Mensaje").fill(values.mensaje);
+  await page.getByLabel("Nombre").fill(values.nombre);
+  await page.getByLabel("Correo electrónico").fill(values.email);
+  await page.getByLabel("Mensaje").fill(values.mensaje);
   await page.getByRole("button", { name: "Enviar mensaje" }).click();
 }
 
@@ -23,7 +23,7 @@ test.describe("contact form", () => {
     await expect(
       page.getByText("¡Gracias por tu mensaje! Te responderé pronto."),
     ).toBeVisible();
-    await expect(page.getByPlaceholder("Nombre")).toHaveCount(0);
+    await expect(page.getByLabel("Nombre")).toHaveCount(0);
   });
 
   test("worker error keeps the form and echoes back typed values", async ({ page }) => {
@@ -36,8 +36,8 @@ test.describe("contact form", () => {
     });
 
     await expect(page.getByText("No se pudo enviar el mensaje")).toBeVisible();
-    await expect(page.getByPlaceholder("Nombre")).toHaveValue("Beto Gómez");
-    await expect(page.getByPlaceholder("Mensaje")).toHaveValue("Este envío debería fallar.");
+    await expect(page.getByLabel("Nombre")).toHaveValue("Beto Gómez");
+    await expect(page.getByLabel("Mensaje")).toHaveValue("Este envío debería fallar.");
   });
 
   test("worker 401 shows the generic message, not the auth detail", async ({ page }) => {

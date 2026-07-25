@@ -4,8 +4,14 @@ export default async function Services() {
   const services = await getServices();
 
   return (
-    <section id="servicios" className="mx-auto max-w-5xl scroll-mt-20 px-6 py-20">
-      <h2 className="text-2xl font-semibold">Servicios</h2>
+    <section
+      id="servicios"
+      aria-labelledby="servicios-heading"
+      className="mx-auto max-w-5xl scroll-mt-20 px-6 py-20"
+    >
+      <h2 id="servicios-heading" className="text-2xl font-semibold">
+        Servicios
+      </h2>
       <div className="mt-8 grid gap-6 sm:grid-cols-3">
         {services.map((service) => (
           <div

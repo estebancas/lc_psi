@@ -20,7 +20,7 @@ test.describe("blog", () => {
     await expect(page).toHaveURL(`/blog/${firstPost.slug}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(firstPost.title);
     const detail = postsBySlug[firstPost.slug];
-    await expect(page.locator("article")).toContainText(detail.body[0].children[0].text);
+    await expect(page.getByRole("article")).toContainText(detail.body[0].children[0].text);
   });
 
   test("404s on an unknown slug", async ({ page }) => {

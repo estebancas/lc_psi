@@ -18,7 +18,11 @@ export default function ContactForm() {
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
+      <label htmlFor="contact-nombre" className="sr-only">
+        Nombre
+      </label>
       <input
+        id="contact-nombre"
         type="text"
         name="nombre"
         placeholder="Nombre"
@@ -27,7 +31,11 @@ export default function ContactForm() {
         defaultValue={state.values?.nombre}
         className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
       />
+      <label htmlFor="contact-email" className="sr-only">
+        Correo electrónico
+      </label>
       <input
+        id="contact-email"
         type="email"
         name="email"
         placeholder="Correo electrónico"
@@ -36,7 +44,11 @@ export default function ContactForm() {
         defaultValue={state.values?.email}
         className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
       />
+      <label htmlFor="contact-mensaje" className="sr-only">
+        Mensaje
+      </label>
       <textarea
+        id="contact-mensaje"
         name="mensaje"
         placeholder="Mensaje"
         rows={4}

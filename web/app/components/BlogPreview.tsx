@@ -5,9 +5,15 @@ export default async function BlogPreview() {
   const posts = await getLatestPosts(3);
 
   return (
-    <section id="blog-preview" className="mx-auto max-w-5xl scroll-mt-20 px-6 py-20">
+    <section
+      id="blog-preview"
+      aria-labelledby="blog-preview-heading"
+      className="mx-auto max-w-5xl scroll-mt-20 px-6 py-20"
+    >
       <div className="flex items-baseline justify-between">
-        <h2 className="text-2xl font-semibold">Blog</h2>
+        <h2 id="blog-preview-heading" className="text-2xl font-semibold">
+          Blog
+        </h2>
         <Link href="/blog" className="text-sm hover:opacity-70">
           Ver todas las publicaciones →
         </Link>

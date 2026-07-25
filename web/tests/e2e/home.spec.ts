@@ -7,12 +7,12 @@ test.describe("home page", () => {
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(profile.heroTitle);
 
-    const servicesSection = page.locator("#servicios");
+    const servicesSection = page.getByRole("region", { name: "Servicios" });
     for (const service of services) {
       await expect(servicesSection.getByText(service.title)).toBeVisible();
     }
 
-    const blogPreview = page.locator("#blog-preview");
+    const blogPreview = page.getByRole("region", { name: "Blog" });
     for (const post of posts.slice(0, 3)) {
       await expect(blogPreview.getByText(post.title)).toBeVisible();
     }
@@ -27,7 +27,8 @@ test.describe("home page", () => {
     await page.goto("/");
 
     const year = String(new Date().getFullYear());
-    await expect(page.locator("footer")).toContainText(year);
-    await expect(page.locator("footer")).toContainText(profile.name);
+    const footer = page.getByRole("contentinfo");
+    await expect(footer).toContainText(year);
+    await expect(footer).toContainText(profile.name);
   });
 });
