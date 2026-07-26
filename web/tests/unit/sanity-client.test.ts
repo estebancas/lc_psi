@@ -60,10 +60,10 @@ describe("sanity client config", () => {
     expect(config.dataset).toBe("staging");
   });
 
-  it("pins apiVersion and disables the CDN", async () => {
+  it("pins apiVersion and enables the CDN", async () => {
     const client = await loadClient();
     const config = client.config();
     expect(config.apiVersion).toBe("2026-07-22");
-    expect(config.useCdn).toBe(false);
+    expect(config.useCdn).toBe(true);
   });
 });
