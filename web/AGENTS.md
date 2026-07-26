@@ -29,3 +29,7 @@ Next.js is pinned to 16.2.x (16.3, needed for Partial Prefetching / `export cons
 ## E2E tests
 
 `tests/e2e/` (Playwright, run via `npm run test:e2e`) never hits real Sanity or the real contact worker — see the `e2e-testing` skill (`web/.claude/skills/e2e-testing/`) for the stub-server architecture and the `apiHost` gotcha in `lib/sanity/client.ts`. Same skill also has the locator rule: target by role/label/testid, never a structural CSS path.
+
+## Unit tests
+
+`tests/unit/` (Vitest, run via `npm run test:unit` from the repo root, or `vitest run --project web`) covers `lib/**` — the Sanity query wrappers (`lib/posts.ts`, `lib/services.ts`, `lib/profile.ts`), the contact server action (`lib/actions/contact.ts`), and the Sanity client's `apiHost`/`useProjectHostname` env-gating (`lib/sanity/client.ts`). Plain `environment: "node"`, no DOM/React rendering — that's e2e's job. One regression guard worth knowing about: `tests/unit/sanity-queries.test.ts` asserts every query wrapper passes `{ next: { revalidate: 30 } }`, so a future switch to `"use cache"` on these fetches (see this file's "Rendering strategy" section above) fails loudly here, not silently in prod. See root `AGENTS.md`'s "Unit tests" section for the coverage-provider constraint shared with `email-worker/`.
