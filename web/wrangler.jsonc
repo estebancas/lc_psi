@@ -10,6 +10,17 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  // Backs the OpenNext incremental cache (open-next.config.ts) — the
+  // prerendered PPR shell and revalidate:30 Sanity fetches persist here
+  // instead of re-rendering on every request. Binding name is fixed by
+  // @opennextjs/cloudflare's r2-incremental-cache override, not configurable.
+  // One-time setup: npx wrangler r2 bucket create lc-psi-inc-cache
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "lc-psi-inc-cache"
+    }
+  ],
   // CONTACT_WORKER_URL is not secret (just the worker's URL) — fill in the
   // deployed email-worker URL before running `npm run deploy:cf`.
   // CONTACT_WORKER_SECRET must NOT go here — set it with:
