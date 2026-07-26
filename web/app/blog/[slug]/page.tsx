@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { PortableText } from "next-sanity";
 import { getPostBySlug, getPosts } from "@/lib/posts";
 import PostSkeleton from "@/app/components/PostSkeleton";
+import PostTypeMark from "@/app/components/ink/PostTypeMark";
+import { portableTextComponents } from "@/app/components/portable-text";
 
 export async function generateStaticParams() {
   const posts = await getPosts();
@@ -38,12 +40,17 @@ async function BlogPostContent({
 
   return (
     <>
-      <p className="text-xs uppercase tracking-wide opacity-50">
-        {post.type === "articulo" ? "Artículo" : "Actualización"} · {post.date}
-      </p>
-      <h1 className="mt-2 text-3xl font-semibold">{post.title}</h1>
-      <div className="prose mt-6 max-w-none leading-relaxed opacity-80">
-        <PortableText value={post.body} />
+      <div className="flex items-center gap-2">
+        <PostTypeMark type={post.type} className="h-5 w-5" />
+        <p className="eyebrow">
+          {post.type === "articulo" ? "Artículo" : "Actualización"} · {post.date}
+        </p>
+      </div>
+      <h1 className="font-display mt-3 text-[clamp(2rem,5vw,3rem)] leading-[1.05]">
+        {post.title}
+      </h1>
+      <div className="mt-8 max-w-none">
+        <PortableText value={post.body} components={portableTextComponents} />
       </div>
     </>
   );
@@ -55,7 +62,7 @@ export default function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   return (
-    <article className="mx-auto max-w-3xl px-6 py-20">
+    <article className="mx-auto max-w-3xl px-6 py-[var(--space-section)]">
       <Suspense fallback={<PostSkeleton />}>
         <BlogPostContent params={params} />
       </Suspense>

@@ -8,13 +8,13 @@ export default function PostListSkeleton() {
           <div
             key={index}
             aria-hidden="true"
-            className="animate-pulse rounded-xl border border-black/10 p-6 dark:border-white/10"
+            className="tile-2 flex animate-pulse flex-col gap-3 p-6"
           >
-            <div className="h-3 w-24 rounded bg-black/10 dark:bg-white/10" />
-            <div className="mt-3 h-5 w-4/5 rounded bg-black/10 dark:bg-white/10" />
-            <div className="mt-3 space-y-2">
-              <div className="h-3 w-full rounded bg-black/10 dark:bg-white/10" />
-              <div className="h-3 w-2/3 rounded bg-black/10 dark:bg-white/10" />
+            <div className="h-5 w-5 rounded-full bg-ink-35" />
+            <div className="h-5 w-4/5 rounded bg-ink-35" />
+            <div className="flex flex-col gap-2">
+              <div className="h-3 w-full rounded bg-ink-35" />
+              <div className="h-3 w-2/3 rounded bg-ink-35" />
             </div>
           </div>
         ))}
