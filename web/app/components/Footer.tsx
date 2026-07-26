@@ -13,10 +13,11 @@ export default async function Footer() {
   const tagline = profile?.footerTagline || "Psicóloga · Atención presencial y en línea";
 
   return (
-    <footer className="border-t border-black/10 py-10 text-sm dark:border-white/10">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-6 text-center opacity-70">
+    <footer className="ink-rule py-10 text-sm">
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 px-6 text-center text-ink-60">
         <p>
-          © <Suspense fallback={null}><CopyrightYear /></Suspense> {name}. Todos los derechos reservados.
+          © <Suspense fallback={null}><CopyrightYear /></Suspense> {name}. Todos los derechos
+          reservados.
         </p>
         <p>{tagline}</p>
       </div>

@@ -1,5 +1,6 @@
 import { getProfile } from "@/lib/profile";
 import ContactForm from "./ContactForm";
+import ChannelMark from "./ink/ChannelMark";
 
 export default async function Contact() {
   const profile = await getProfile();
@@ -8,34 +9,56 @@ export default async function Contact() {
   const phoneNumber = profile?.phone || "+52 55 0000 0000";
   const email = profile?.email || "contacto@lauracastro.mx";
 
-  return (
-    <section id="contacto" className="mx-auto max-w-5xl scroll-mt-20 px-6 py-20">
-      <h2 className="text-2xl font-semibold">Contacto</h2>
+  const channels = [
+    {
+      kind: "whatsapp" as const,
+      label: "WhatsApp",
+      value: "Escríbeme directo",
+      href: `https://wa.me/${whatsappNumber}`,
+      external: true,
+    },
+    {
+      kind: "phone" as const,
+      label: "Teléfono",
+      value: phoneNumber,
+      href: `tel:${phoneNumber}`,
+      external: false,
+    },
+    {
+      kind: "email" as const,
+      label: "Correo",
+      value: email,
+      href: `mailto:${email}`,
+      external: false,
+    },
+  ];
 
-      <div className="mt-8 grid gap-10 md:grid-cols-2">
+  return (
+    <section
+      id="contacto"
+      className="ink-rule mx-auto max-w-5xl scroll-mt-20 px-6 py-[var(--space-section)]"
+    >
+      <h2 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] uppercase">Contacto</h2>
+
+      <div className="mt-10 grid gap-10 md:grid-cols-2">
         <ContactForm />
 
-        <div className="flex flex-col gap-4 text-sm">
-          <a
-            href={`https://wa.me/${whatsappNumber}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-lg border border-black/10 px-4 py-3 hover:bg-black/[.03] dark:border-white/10 dark:hover:bg-white/[.05]"
-          >
-            WhatsApp
-          </a>
-          <a
-            href={`tel:${phoneNumber}`}
-            className="rounded-lg border border-black/10 px-4 py-3 hover:bg-black/[.03] dark:border-white/10 dark:hover:bg-white/[.05]"
-          >
-            Llamar: {phoneNumber}
-          </a>
-          <a
-            href={`mailto:${email}`}
-            className="rounded-lg border border-black/10 px-4 py-3 hover:bg-black/[.03] dark:border-white/10 dark:hover:bg-white/[.05]"
-          >
-            {email}
-          </a>
+        <div className="flex flex-col gap-4">
+          {channels.map((channel, index) => (
+            <a
+              key={channel.kind}
+              href={channel.href}
+              target={channel.external ? "_blank" : undefined}
+              rel={channel.external ? "noopener noreferrer" : undefined}
+              className={`tile-${index % 3} flex items-center gap-4 p-5 transition-transform hover:-translate-y-1`}
+            >
+              <ChannelMark kind={channel.kind} className="h-8 w-8 flex-shrink-0" />
+              <div>
+                <p className="eyebrow">{channel.label}</p>
+                <p className="mt-1 font-display text-lg">{channel.value}</p>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>

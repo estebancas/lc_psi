@@ -5,14 +5,15 @@ import { submitContact, type ContactState } from "@/lib/actions/contact";
 
 const initialState: ContactState = { status: "idle" };
 
+const fieldClass =
+  "border-[1.5px] border-ink bg-transparent px-4 py-3 text-sm placeholder:text-ink-35 focus:outline-none";
+
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(submitContact, initialState);
 
   if (state.status === "success") {
     return (
-      <p className="rounded-lg border border-black/15 px-4 py-6 text-sm dark:border-white/20">
-        ¡Gracias por tu mensaje! Te responderé pronto.
-      </p>
+      <p className="tile-2 p-6 text-sm">¡Gracias por tu mensaje! Te responderé pronto.</p>
     );
   }
 
@@ -29,7 +30,7 @@ export default function ContactForm() {
         required
         disabled={isPending}
         defaultValue={state.values?.nombre}
-        className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
+        className={fieldClass}
       />
       <label htmlFor="contact-email" className="sr-only">
         Correo electrónico
@@ -42,7 +43,7 @@ export default function ContactForm() {
         required
         disabled={isPending}
         defaultValue={state.values?.email}
-        className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
+        className={fieldClass}
       />
       <label htmlFor="contact-mensaje" className="sr-only">
         Mensaje
@@ -55,17 +56,17 @@ export default function ContactForm() {
         required
         disabled={isPending}
         defaultValue={state.values?.mensaje}
-        className="rounded-lg border border-black/15 bg-transparent px-4 py-3 text-sm dark:border-white/20"
+        className={fieldClass}
       />
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-full bg-foreground px-6 py-3 text-sm text-background transition-opacity hover:opacity-80 disabled:opacity-50"
+        className="pill pill--solid disabled:opacity-50"
       >
         {isPending ? "Enviando..." : "Enviar mensaje"}
       </button>
       {state.status === "error" && (
-        <p className="text-sm text-red-600 dark:text-red-400">{state.message}</p>
+        <p className="text-sm text-red-700">{state.message}</p>
       )}
     </form>
   );
