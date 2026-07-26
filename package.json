@@ -14,12 +14,20 @@
     "build:studio": "npm run build -w ./studio",
     "deploy:web": "npm run deploy:cf -w ./web",
     "deploy:studio": "npm run deploy:cf -w ./studio",
+    "test:unit": "vitest run",
+    "test:unit:coverage": "vitest run --coverage",
     "test:e2e": "npm run test:e2e -w ./web",
+    "test": "npm run test:unit && npm run test:e2e",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "overrides": {
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.18.8",
+    "@vitest/coverage-istanbul": "^4.1.10",
+    "vitest": "^4.1.10"
   }
 }

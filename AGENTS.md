@@ -23,3 +23,11 @@ Sanity content (blog posts, services copy) is fetched with a short revalidation 
 ## E2E tests: no real network
 
 `web/tests/e2e` — Playwright, run via `npm run test:e2e` (root or `web/`). Zero dependency on real Sanity or the real contact worker: a zero-dependency Node stub server stands in for both, and `web/lib/sanity/client.ts` redirects to it via `SANITY_API_HOST` (inert unless set — normal dev/prod untouched). Runs against a real `next build && next start`, not `next dev`, so Cache Components/PPR behavior is genuinely exercised. Stack, rationale, and the `apiHost` gotcha that made this non-trivial: `web/AGENTS.md`.
+
+## Unit tests
+
+Vitest 4, run via `npm run test:unit` (root — `vitest.config.ts` fans out into per-workspace projects: `web/vitest.config.ts`, `email-worker/vitest.config.ts`). Covers `web/lib/**` (Sanity query wrappers, the contact server action, the Sanity client's `apiHost` env-gating) and `email-worker/src/worker.ts` (request handling, sanitization, MIME message building). Studio schemas are declarative `defineType`/`defineField` config with no unit-test-worthy logic, so `studio/` has none.
+
+`email-worker/tests/` run inside real workerd via `@cloudflare/vitest-pool-workers`, not a Node shim — the worker imports `cloudflare:email` and needs `nodejs_compat`, neither available under plain Node. Tests call `worker.fetch(request, env)` directly with a hand-built `env` object (`EMAIL: { send: vi.fn() }`), not the Miniflare-provisioned `env` from `cloudflare:test` — no need to wire the real `send_email` binding just to unit-test request handling.
+
+**Coverage provider is pinned to `istanbul`, not the v8 default** — `@cloudflare/vitest-pool-workers` does not support native V8 coverage. A single Vitest run has one coverage provider shared across all projects, so this is set once in the root `vitest.config.ts`, not per-project. `npm run test:unit:coverage` writes `coverage/` (text summary, `coverage-summary.json`, HTML); CI turns the JSON into a markdown table via `scripts/coverage-summary.mjs` in the job summary. Report-only for now — no `coverage.thresholds` gate — see the `unit` job in `.github/workflows/ci.yml`.
