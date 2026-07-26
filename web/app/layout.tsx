@@ -16,9 +16,17 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://psicologalauracastro.com"),
   title: "Laura Castro Cordero | Psicóloga",
   description:
     "Terapia psicológica individual, de pareja y para adolescentes con Laura Castro Cordero.",
+  openGraph: {
+    title: "Laura Castro Cordero | Psicóloga",
+    description:
+      "Terapia psicológica individual, de pareja y para adolescentes con Laura Castro Cordero.",
+    locale: "es_MX",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

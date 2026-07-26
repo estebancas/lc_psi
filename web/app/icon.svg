@@ -1,0 +1,19 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'>
+  <!-- Background Tile in Soft Sky Blue (#C0E3E7) -->
+  <rect width='512' height='512' rx='116' fill='#C0E3E7' />
+  
+  <!-- Subtle Editorial Ink Border -->
+  <rect x='16' y='16' width='480' height='480' rx='100' fill='none' stroke='#14150F' stroke-width='16' stroke-opacity='0.12' />
+
+  <!-- Monogram LC + Gentle Leaf Accent in Dark Ink (#14150F) -->
+  <g fill='none' stroke='#14150F' stroke-width='32' stroke-linecap='round' stroke-linejoin='round'>
+    <!-- Sage Green Leaf / Mind Sprout Accent -->
+    <path d='M 235 110 C 235 75, 280 60, 305 85 C 330 110, 285 135, 235 110 Z' fill='#E1EAD8' stroke-width='22' />
+    
+    <!-- Letter 'l' -->
+    <path d='M 175 160 L 175 330 C 175 352, 192 360, 215 360' />
+    
+    <!-- Letter 'c' -->
+    <path d='M 355 240 C 325 210, 265 210, 240 250 C 215 290, 215 325, 240 360 C 265 390, 325 390, 355 360' />
+  </g>
+</svg>
