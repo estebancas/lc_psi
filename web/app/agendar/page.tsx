@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import Link from "next/link";
+import { connection } from "next/server";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,11 +8,31 @@ export const metadata: Metadata = {
   description: "Agenda una cita con Laura Castro Cordero directamente desde Google Calendar.",
 };
 
+// Read at request time via connection(), not module scope — under Cache
+// Components module scope evaluates during the build-time prerender, which
+// has no access to the Cloudflare Worker's runtime env vars and would bake
+// in the placeholder permanently. No NEXT_PUBLIC_ prefix: this is
+// server-only (never sent to the client bundle), same as CONTACT_WORKER_URL.
+//
 // Falls back to a placeholder until Laura's real Google Appointment
 // Scheduler link arrives (see issue #13's "open items"). Google's booking
 // pages send X-Frame-Options: sameorigin, so this can't be embedded in an
 // iframe — it opens in a new tab instead.
-const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL || "https://calendar.google.com/";
+async function BookingLink() {
+  await connection();
+  const bookingUrl = process.env.BOOKING_URL || "https://calendar.google.com/";
+
+  return (
+    <a
+      href={bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="pill pill--solid mt-10 inline-flex px-6 py-3 text-sm"
+    >
+      Abrir calendario y agendar
+    </a>
+  );
+}
 
 export default function AgendarPage() {
   return (
@@ -28,14 +50,9 @@ export default function AgendarPage() {
         .
       </p>
 
-      <a
-        href={bookingUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="pill pill--solid mt-10 inline-flex px-6 py-3 text-sm"
-      >
-        Abrir calendario y agendar
-      </a>
+      <Suspense fallback={null}>
+        <BookingLink />
+      </Suspense>
     </section>
   );
 }
