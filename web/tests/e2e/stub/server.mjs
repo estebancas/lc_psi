@@ -152,6 +152,18 @@ export function startStub(port) {
       return;
     }
 
+    // Stands in for Google's real booking embed (NEXT_PUBLIC_BOOKING_URL) so
+    // the /agendar page's iframe never reaches real network in e2e.
+    if (url.pathname === "/booking") {
+      const html = "<!doctype html><title>stub booking</title><body>stub booking calendar</body>";
+      res.writeHead(200, {
+        "Content-Type": "text/html",
+        "Content-Length": Buffer.byteLength(html),
+      });
+      res.end(html);
+      return;
+    }
+
     console.error(`[e2e stub] Unhandled request: ${req.method} ${url.pathname}`);
     res.writeHead(501);
     res.end();

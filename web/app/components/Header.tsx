@@ -26,13 +26,16 @@ export default async function Header() {
               {link.label}
             </Link>
           ))}
-          <Link href="/#contacto" className="pill pill--solid px-5 py-2.5 text-sm">
+          <Link href="/agendar" className="pill pill--solid px-5 py-2.5 text-sm">
             Agendar
           </Link>
         </nav>
 
         <details className="relative md:hidden">
-          <summary className="flex cursor-pointer list-none items-center p-1 [&::-webkit-details-marker]:hidden">
+          <summary
+            data-testid="mobile-menu-toggle"
+            className="flex cursor-pointer list-none items-center p-1 [&::-webkit-details-marker]:hidden"
+          >
             <span className="sr-only">Menú</span>
             <svg viewBox="0 0 28 20" className="ink-mark h-5 w-7" aria-hidden="true">
               <path d="M2,2 L26,3" />
@@ -46,7 +49,7 @@ export default async function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/#contacto" className="pill pill--solid py-2.5 text-sm">
+            <Link href="/agendar" className="pill pill--solid py-2.5 text-sm">
               Agendar
             </Link>
           </nav>

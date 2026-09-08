@@ -49,6 +49,7 @@ export default defineConfig({
       NEXT_PUBLIC_SANITY_DATASET: "test",
       CONTACT_WORKER_URL: "http://127.0.0.1:4010/worker",
       CONTACT_WORKER_SECRET: "test-secret",
+      NEXT_PUBLIC_BOOKING_URL: "http://127.0.0.1:4010/booking",
     },
   },
 });
