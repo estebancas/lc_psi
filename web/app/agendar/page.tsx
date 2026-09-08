@@ -7,7 +7,9 @@ export const metadata: Metadata = {
 };
 
 // Falls back to a placeholder until Laura's real Google Appointment
-// Scheduler link/embed arrives (see issue #13's "open items").
+// Scheduler link arrives (see issue #13's "open items"). Google's booking
+// pages send X-Frame-Options: sameorigin, so this can't be embedded in an
+// iframe — it opens in a new tab instead.
 const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL || "https://calendar.google.com/";
 
 export default function AgendarPage() {
@@ -17,30 +19,23 @@ export default function AgendarPage() {
         Agendar una cita
       </h1>
       <p className="mt-4 max-w-xl text-ink-60">
-        Elige el horario que mejor te acomode desde el calendario de disponibilidad. Si prefieres
-        escribir antes de agendar, también puedes{" "}
+        Abre el calendario de disponibilidad de Laura para elegir el horario que mejor te acomode.
+        Se abrirá en una pestaña nueva de Google Calendar. Si prefieres escribir antes de agendar,
+        también puedes{" "}
         <Link href="/#contacto" className="ink-underline">
           ir a la sección de contacto
         </Link>
         .
       </p>
 
-      <div className="mt-10 border border-ink bg-paper shadow-[4px_4px_0_0_var(--ink)]">
-        <iframe
-          src={bookingUrl}
-          title="Calendario de disponibilidad para agendar una cita"
-          className="h-[720px] w-full"
-          frameBorder={0}
-        />
-      </div>
-
-      <p className="mt-6 text-sm text-ink-60">
-        ¿El calendario no carga bien en tu navegador?{" "}
-        <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="ink-underline">
-          Ábrelo en una pestaña nueva
-        </a>
-        .
-      </p>
+      <a
+        href={bookingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="pill pill--solid mt-10 inline-flex px-6 py-3 text-sm"
+      >
+        Abrir calendario y agendar
+      </a>
     </section>
   );
 }

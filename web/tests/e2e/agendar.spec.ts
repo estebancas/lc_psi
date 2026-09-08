@@ -21,14 +21,23 @@ test.describe("agendar page", () => {
     await expect(page).toHaveURL("/agendar");
   });
 
-  test("renders the booking iframe and a contact fallback link", async ({ page }) => {
+  test("renders a contact fallback link and opens the booking calendar in a new tab", async ({
+    page,
+    context,
+  }) => {
     await page.goto("/agendar");
 
     await expect(page.getByRole("heading", { level: 1, name: "Agendar una cita" })).toBeVisible();
-    await expect(page.frameLocator("iframe").locator("body")).toContainText("stub booking");
     await expect(page.getByRole("link", { name: "ir a la sección de contacto" })).toHaveAttribute(
       "href",
       "/#contacto",
     );
+
+    const bookingLink = page.getByRole("link", { name: "Abrir calendario y agendar" });
+    await expect(bookingLink).toHaveAttribute("target", "_blank");
+
+    const [popup] = await Promise.all([context.waitForEvent("page"), bookingLink.click()]);
+    await popup.waitForLoadState();
+    await expect(popup.getByText("stub booking calendar")).toBeVisible();
   });
 });
