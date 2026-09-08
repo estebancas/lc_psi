@@ -21,12 +21,15 @@
       "bucket_name": "lc-psi-inc-cache"
     }
   ],
-  // CONTACT_WORKER_URL is not secret (just the worker's URL) — fill in the
-  // deployed email-worker URL before running `npm run deploy:cf`.
+  // CONTACT_WORKER_URL and BOOKING_URL are not secret (just URLs) — fill in
+  // the deployed email-worker URL / Google booking page URL before running
+  // `npm run deploy:cf`. A var set only via the Cloudflare dashboard gets
+  // wiped on the next `wrangler deploy` — it has to live here to persist.
   // CONTACT_WORKER_SECRET must NOT go here — set it with:
   //   npx wrangler secret put CONTACT_WORKER_SECRET
   "vars": {
-    "CONTACT_WORKER_URL": "https://lc-psi-email-worker.lauracastropsi25.workers.dev"
+    "CONTACT_WORKER_URL": "https://lc-psi-email-worker.lauracastropsi25.workers.dev",
+    "BOOKING_URL": "https://calendar.app.google/NkGpQokRrToSpaf27"
   },
   "routes": [{ "pattern": "psicologalauracastro.com", "custom_domain": true }]
 }
