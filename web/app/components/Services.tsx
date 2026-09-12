@@ -1,4 +1,6 @@
+import { PortableText } from "next-sanity";
 import { getServices } from "@/lib/services";
+import { portableTextComponents } from "./portable-text";
 import ServiceMark from "./ink/ServiceMark";
 
 export default async function Services() {
@@ -21,7 +23,9 @@ export default async function Services() {
               <ServiceMark slug={service.slug} index={index} className="h-16 w-16" />
               <div>
                 <h3 className="font-display text-lg">{service.title}</h3>
-                <p className="mt-2 text-sm text-ink-60">{service.description}</p>
+                <div className="mt-2 text-sm">
+                  <PortableText value={service.description} components={portableTextComponents} />
+                </div>
               </div>
             </div>
           ))}
