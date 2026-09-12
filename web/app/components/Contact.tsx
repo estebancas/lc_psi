@@ -5,9 +5,9 @@ import ChannelMark from "./ink/ChannelMark";
 export default async function Contact() {
   const profile = await getProfile();
 
-  const whatsappNumber = profile?.whatsapp || "5210000000000";
-  const phoneNumber = profile?.phone || "+52 55 0000 0000";
-  const email = profile?.email || "contacto@lauracastro.mx";
+  const whatsappNumber = profile?.whatsapp || "50600000000";
+  const phoneNumber = profile?.phone || "+506 0000 0000";
+  const email = profile?.email || "contacto@psicologalauracastro.com";
 
   const channels = [
     {
@@ -21,7 +21,10 @@ export default async function Contact() {
       kind: "phone" as const,
       label: "Teléfono",
       value: phoneNumber,
-      href: `tel:${phoneNumber}`,
+      // wa.me tolerates a plain digit string, but tel: URIs must not contain
+      // spaces — profile.phone is stored in a human-readable "+506 7156 1628"
+      // format for display, so strip whitespace only when building the href.
+      href: `tel:${phoneNumber.replace(/\s+/g, "")}`,
       external: false,
     },
     {
