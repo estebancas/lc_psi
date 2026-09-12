@@ -45,13 +45,11 @@ test.describe("blog", () => {
     // Not asserting response.status() here: under Cache Components/PPR, the
     // static <article> shell's 200 headers are already flushed before
     // BlogPostContent's Suspense boundary resolves and calls notFound(), so
-    // the HTTP status stays 200 even though the correct not-found UI renders
-    // (verified: page shows Next's default "404" / "This page could not be
-    // found." headings). Assert on rendered content instead.
+    // the HTTP status stays 200 even though the correct not-found UI renders.
+    // Assert on rendered content instead — app/not-found.tsx's Spanish UI,
+    // not Next's English default.
     await page.goto("/blog/does-not-exist");
-    await expect(page.getByRole("heading", { name: "404" })).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "This page could not be found." }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Página no encontrada" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Volver al inicio" })).toBeVisible();
   });
 });

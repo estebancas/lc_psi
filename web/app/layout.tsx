@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Fraunces, Instrument_Sans } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { SITE_NAME } from "@/lib/seo";
+import Analytics from "./components/Analytics";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -53,6 +55,9 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
