@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PortableText } from "next-sanity";
 import { getPostBySlug, getPosts } from "@/lib/posts";
+import { formatDate } from "@/lib/format-date";
 import PostSkeleton from "@/app/components/PostSkeleton";
 import PostTypeMark from "@/app/components/ink/PostTypeMark";
 import { portableTextComponents } from "@/app/components/portable-text";
@@ -43,7 +44,8 @@ async function BlogPostContent({
       <div className="flex items-center gap-2">
         <PostTypeMark type={post.type} className="h-5 w-5" />
         <p className="eyebrow">
-          {post.type === "articulo" ? "Artículo" : "Actualización"} · {post.date}
+          {post.type === "articulo" ? "Artículo" : "Actualización"} ·{" "}
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
         </p>
       </div>
       <h1 className="font-display mt-3 text-[clamp(2rem,5vw,3rem)] leading-[1.05]">

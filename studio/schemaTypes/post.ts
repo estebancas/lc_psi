@@ -37,13 +37,26 @@ export const post = defineType({
       title: 'Extracto',
       type: 'text',
       rows: 3,
-      validation: (Rule) => Rule.required(),
+      description:
+        'Resumen del artículo, no una firma o encabezado. Se usa como descripción en resultados de búsqueda y al compartir en redes — debe explicar de qué trata el contenido.',
+      validation: (Rule) => Rule.required().min(70).max(160),
     }),
     defineField({
       name: 'body',
       title: 'Contenido',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'Subtítulo 2', value: 'h2'},
+            {title: 'Subtítulo 3', value: 'h3'},
+            {title: 'Subtítulo 4', value: 'h4'},
+            {title: 'Cita', value: 'blockquote'},
+          ],
+        },
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({

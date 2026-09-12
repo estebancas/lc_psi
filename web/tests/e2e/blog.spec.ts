@@ -18,9 +18,27 @@ test.describe("blog", () => {
     await page.getByText(firstPost.title).click();
 
     await expect(page).toHaveURL(`/blog/${firstPost.slug}`);
+    // Exactly one h1 on the page — a regression guard for the duplicate-h1
+    // bug where a Portable Text body block using the "h1" style rendered a
+    // second one alongside the page's own title heading.
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(firstPost.title);
     const detail = postsBySlug[firstPost.slug];
     await expect(page.getByRole("article")).toContainText(detail.body[0].children[0].text);
+  });
+
+  test("renders the post date as a formatted, machine-readable <time> element", async ({
+    page,
+  }) => {
+    const [firstPost] = posts;
+    await page.goto(`/blog/${firstPost.slug}`);
+
+    const time = page.locator("article time");
+    await expect(time).toHaveAttribute("datetime", firstPost.date);
+    // Not asserting the exact formatted string here (locale formatting is
+    // covered by the formatDate unit tests) — just that it's no longer the
+    // raw ISO value.
+    await expect(time).not.toHaveText(firstPost.date);
   });
 
   test("404s on an unknown slug", async ({ page }) => {
