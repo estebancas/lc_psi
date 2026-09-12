@@ -1,6 +1,6 @@
 import type { PortableTextComponents } from "@portabletext/react";
 
-// Shared rich-text styling for Sanity block content (bio, blog posts).
+// Shared rich-text styling for Sanity block content (bio, blog posts, service descriptions).
 // `.prose` was a no-op — `@tailwindcss/typography` was never installed — so
 // headings, lists, and links rendered with only Preflight applied. This
 // replaces it with explicit components in the site's own type system

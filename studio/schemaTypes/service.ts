@@ -21,8 +21,23 @@ export const service = defineType({
     defineField({
       name: 'description',
       title: 'Descripción',
-      type: 'text',
-      rows: 4,
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [{title: 'Normal', value: 'normal'}],
+          lists: [
+            {title: 'Viñetas', value: 'bullet'},
+            {title: 'Numerada', value: 'number'},
+          ],
+          marks: {
+            decorators: [
+              {title: 'Negrita', value: 'strong'},
+              {title: 'Cursiva', value: 'em'},
+            ],
+          },
+        },
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({

@@ -1,10 +1,10 @@
-import { defineQuery } from "next-sanity";
+import { defineQuery, type PortableTextBlock } from "next-sanity";
 import { client } from "@/lib/sanity/client";
 
 export type Service = {
   slug: string;
   title: string;
-  description: string;
+  description: PortableTextBlock[];
 };
 
 const SERVICES_QUERY = defineQuery(

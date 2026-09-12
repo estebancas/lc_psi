@@ -12,6 +12,17 @@ test.describe("home page", () => {
       await expect(servicesSection.getByText(service.title)).toBeVisible();
     }
 
+    // "Terapia individual" description is Portable Text with a bold lead-in
+    // and bullet list — assert it actually renders as structured content,
+    // not raw block JSON. (Tailwind's list-style: none reset strips the
+    // accessible name Chromium reports for role "listitem", so match by
+    // text here rather than getByRole.)
+    await expect(servicesSection.getByText("Puede ser adecuada para:")).toBeVisible();
+    await expect(
+      servicesSection.getByText("Orientación ante una situación específica"),
+    ).toBeVisible();
+    await expect(servicesSection.getByText("Toma de decisiones importantes")).toBeVisible();
+
     const blogPreview = page.getByRole("region", { name: "Blog" });
     for (const post of posts.slice(0, 3)) {
       await expect(blogPreview.getByText(post.title)).toBeVisible();

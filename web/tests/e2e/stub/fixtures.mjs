@@ -38,17 +38,85 @@ export const services = [
   {
     slug: "terapia-individual",
     title: "Terapia individual",
-    description: "Sesiones personalizadas para tu proceso de bienestar emocional.",
+    description: [
+      {
+        _type: "block",
+        _key: "ti-intro",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "ti-introspan",
+            marks: ["strong"],
+            text: "Puede ser adecuada para:",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "ti-item1",
+        style: "normal",
+        listItem: "bullet",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "ti-item1span",
+            text: "Orientación ante una situación específica",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "ti-item2",
+        style: "normal",
+        listItem: "bullet",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "ti-item2span",
+            text: "Toma de decisiones importantes",
+          },
+        ],
+      },
+    ],
   },
   {
     slug: "terapia-de-pareja",
     title: "Terapia de pareja",
-    description: "Acompañamiento para fortalecer la comunicación en la relación.",
+    description: [
+      {
+        _type: "block",
+        _key: "tp-body1",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "tp-body1span",
+            text: "Acompañamiento para fortalecer la comunicación en la relación.",
+          },
+        ],
+      },
+    ],
   },
   {
     slug: "terapia-para-adolescentes",
     title: "Terapia para adolescentes",
-    description: "Espacio seguro de escucha para adolescentes.",
+    description: [
+      {
+        _type: "block",
+        _key: "ta-body1",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "ta-body1span",
+            text: "Espacio seguro de escucha para adolescentes.",
+          },
+        ],
+      },
+    ],
   },
 ];
 
