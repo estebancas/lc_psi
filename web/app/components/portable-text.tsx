@@ -7,6 +7,15 @@ import type { PortableTextComponents } from "@portabletext/react";
 // instead of pulling in the typography plugin.
 export const portableTextComponents: PortableTextComponents = {
   block: {
+    // The post schema no longer offers "h1" as a block style (see
+    // studio/schemaTypes/post.ts), but older content saved before that
+    // change — or content edited directly through the API — can still carry
+    // one. The page itself already renders the post title as the single
+    // <h1>, so any body h1 is demoted here rather than producing a second
+    // one.
+    h1: ({ children }) => (
+      <h2 className="font-display mt-10 text-2xl first:mt-0">{children}</h2>
+    ),
     h2: ({ children }) => (
       <h2 className="font-display mt-10 text-2xl first:mt-0">{children}</h2>
     ),

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPosts } from "@/lib/posts";
+import { formatDate } from "@/lib/format-date";
 import PostListSkeleton from "@/app/components/PostListSkeleton";
 import PostTypeMark from "@/app/components/ink/PostTypeMark";
 
@@ -32,7 +33,8 @@ async function PostGrid() {
           <div className="flex items-center gap-2">
             <PostTypeMark type={post.type} className="h-5 w-5" />
             <p className="eyebrow">
-              {post.type === "articulo" ? "Artículo" : "Actualización"} · {post.date}
+              {post.type === "articulo" ? "Artículo" : "Actualización"} ·{" "}
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
             </p>
           </div>
           <h2 className="font-display text-lg">{post.title}</h2>
