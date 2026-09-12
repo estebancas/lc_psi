@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: "Laura Castro Cordero | Psicóloga",
     description:
       "Terapia psicológica individual, de pareja y para adolescentes con Laura Castro Cordero.",
-    locale: "es_MX",
+    locale: "es_CR",
     type: "website",
   },
 };
@@ -36,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="es-CR"
       className={`${fraunces.variable} ${instrumentSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">

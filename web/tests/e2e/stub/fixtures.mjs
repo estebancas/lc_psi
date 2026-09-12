@@ -28,9 +28,9 @@ export const profile = {
       ],
     },
   ],
-  email: "contacto@lauracastro.mx",
-  phone: "+52 55 0000 0000",
-  whatsapp: "5210000000000",
+  email: "contacto@psicologalauracastro.com",
+  phone: "+506 7156 1628",
+  whatsapp: "50671561628",
   footerTagline: "Terapia con un enfoque humano.",
 };
 

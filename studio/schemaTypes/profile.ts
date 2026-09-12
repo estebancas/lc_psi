@@ -58,13 +58,19 @@ export const profile = defineType({
       name: 'phone',
       title: 'Teléfono de contacto (formato visible)',
       type: 'string',
-      description: 'Ejemplo: +52 55 0000 0000',
+      description: 'Ejemplo: +506 7156 1628',
     }),
     defineField({
       name: 'whatsapp',
       title: 'Número de WhatsApp',
       type: 'string',
-      description: 'Formato internacional sin espacio ni signos, ej: 5210000000000',
+      description:
+        'Formato internacional completo, sin espacios ni signos: código de país + número, ej: 50671561628 (Costa Rica = 506). Sin el código de país el enlace de WhatsApp del sitio no funciona.',
+      validation: (Rule) =>
+        Rule.regex(/^\d{8,15}$/, {
+          name: 'formato internacional',
+          invert: false,
+        }).error('Debe ser solo dígitos, incluyendo el código de país (ej: 50671561628).'),
     }),
     defineField({
       name: 'footerTagline',
