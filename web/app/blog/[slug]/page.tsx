@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { PortableText } from "next-sanity";
 import { getPostBySlug, getPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/format-date";
+import { SITE_NAME, articleSeo, withSiteSuffix } from "@/lib/seo";
 import PostSkeleton from "@/app/components/PostSkeleton";
 import PostTypeMark from "@/app/components/ink/PostTypeMark";
 import { portableTextComponents } from "@/app/components/portable-text";
@@ -21,11 +22,29 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  if (!post) return {};
+  if (!post) {
+    // Pairs with the notFound() call in BlogPostContent below: without this,
+    // a missing slug fell back to bare {} and inherited the root layout's
+    // title/description, so a 404 page presented itself to search engines
+    // (and social previews) as the homepage.
+    return {
+      title: "Publicación no encontrada",
+      description: "La publicación que buscas no existe o fue eliminada.",
+      robots: { index: false, follow: true },
+    };
+  }
 
   return {
-    title: `${post.title} | Laura Castro Cordero`,
+    title: post.title,
     description: post.excerpt,
+    ...articleSeo({
+      path: `/blog/${post.slug}`,
+      title: withSiteSuffix(post.title),
+      description: post.excerpt,
+      publishedTime: post.date,
+      modifiedTime: post.updatedAt,
+      authorName: SITE_NAME,
+    }),
   };
 }
 

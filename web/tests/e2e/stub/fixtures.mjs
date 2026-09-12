@@ -149,6 +149,7 @@ export const postsBySlug = Object.fromEntries(
     post.slug,
     {
       ...post,
+      updatedAt: `${post.date}T12:00:00.000Z`,
       body: [
         {
           _type: "block",

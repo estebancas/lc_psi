@@ -2,10 +2,15 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { connection } from "next/server";
 import type { Metadata } from "next";
+import { pageSeo, withSiteSuffix } from "@/lib/seo";
+
+const TITLE = "Agendar una cita";
+const DESCRIPTION = "Agenda una cita con Laura Castro Cordero directamente desde Google Calendar.";
 
 export const metadata: Metadata = {
-  title: "Agendar una cita | Laura Castro Cordero",
-  description: "Agenda una cita con Laura Castro Cordero directamente desde Google Calendar.",
+  title: TITLE,
+  description: DESCRIPTION,
+  ...pageSeo({ path: "/agendar", title: withSiteSuffix(TITLE), description: DESCRIPTION }),
 };
 
 // Read at request time via connection(), not module scope — under Cache
