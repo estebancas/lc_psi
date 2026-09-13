@@ -21,15 +21,27 @@
       "bucket_name": "lc-psi-inc-cache"
     }
   ],
-  // CONTACT_WORKER_URL and BOOKING_URL are not secret (just URLs) — fill in
-  // the deployed email-worker URL / Google booking page URL before running
-  // `npm run deploy:cf`. A var set only via the Cloudflare dashboard gets
-  // wiped on the next `wrangler deploy` — it has to live here to persist.
+  // CONTACT_WORKER_URL, BOOKING_URL, and CF_BEACON_TOKEN are not secret (just
+  // URLs / a public analytics token) — fill in the deployed email-worker
+  // URL / Google booking page URL / Cloudflare Web Analytics beacon token
+  // before running `npm run deploy:cf`. A var set only via the Cloudflare
+  // dashboard gets wiped on the next `wrangler deploy` — it has to live here
+  // to persist. CF_BEACON_TOKEN starts empty: create the site under
+  // Cloudflare dashboard > Web Analytics first, then paste its beacon
+  // token here — app/components/Analytics.tsx renders nothing until it's
+  // set, so this is a no-op, not a broken script tag, in the meantime.
   // CONTACT_WORKER_SECRET must NOT go here — set it with:
   //   npx wrangler secret put CONTACT_WORKER_SECRET
   "vars": {
     "CONTACT_WORKER_URL": "https://lc-psi-email-worker.lauracastropsi25.workers.dev",
-    "BOOKING_URL": "https://calendar.app.google/NkGpQokRrToSpaf27"
+    "BOOKING_URL": "https://calendar.app.google/NkGpQokRrToSpaf27",
+    "CF_BEACON_TOKEN": ""
   },
-  "routes": [{ "pattern": "psicologalauracastro.com", "custom_domain": true }]
+  "routes": [
+    { "pattern": "psicologalauracastro.com", "custom_domain": true },
+    // www has no DNS record today (verified: dig returns nothing) — this
+    // provisions it the same way the apex's custom_domain already is, so
+    // middleware.ts can redirect it instead of the hostname dead-ending.
+    { "pattern": "www.psicologalauracastro.com", "custom_domain": true }
+  ]
 }
