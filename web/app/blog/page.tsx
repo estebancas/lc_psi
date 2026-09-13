@@ -3,12 +3,17 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/format-date";
+import { pageSeo, withSiteSuffix } from "@/lib/seo";
 import PostListSkeleton from "@/app/components/PostListSkeleton";
 import PostTypeMark from "@/app/components/ink/PostTypeMark";
 
+const TITLE = "Blog";
+const DESCRIPTION = "Artículos y actualizaciones sobre salud mental y bienestar.";
+
 export const metadata: Metadata = {
-  title: "Blog | Laura Castro Cordero",
-  description: "Artículos y actualizaciones sobre salud mental y bienestar.",
+  title: TITLE,
+  description: DESCRIPTION,
+  ...pageSeo({ path: "/blog", title: withSiteSuffix(TITLE), description: DESCRIPTION }),
 };
 
 async function PostGrid() {

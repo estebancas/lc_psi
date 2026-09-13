@@ -13,6 +13,9 @@ export type Post = {
 
 export type PostDetail = Post & {
   body: PortableTextBlock[];
+  // Sanity's built-in last-edit timestamp — used for openGraph.modifiedTime,
+  // not shown in the UI, so it doesn't need its own Studio field.
+  updatedAt: string;
 };
 
 const POSTS_QUERY = defineQuery(
@@ -20,7 +23,7 @@ const POSTS_QUERY = defineQuery(
 );
 
 const POST_BY_SLUG_QUERY = defineQuery(
-  `*[_type == "post" && slug.current == $slug][0]{ "slug": slug.current, title, excerpt, type, "date": publishedAt, body }`
+  `*[_type == "post" && slug.current == $slug][0]{ "slug": slug.current, title, excerpt, type, "date": publishedAt, body, "updatedAt": _updatedAt }`
 );
 
 const options = { next: { revalidate: 30 } };

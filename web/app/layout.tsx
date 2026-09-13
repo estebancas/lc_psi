@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Instrument_Sans } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { SITE_NAME } from "@/lib/seo";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -17,13 +18,22 @@ const instrumentSans = Instrument_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://psicologalauracastro.com"),
-  title: "Laura Castro Cordero | Psicóloga",
+  title: {
+    default: "Laura Castro Cordero | Psicóloga",
+    // Applied to every route's `title` string automatically — routes below
+    // now pass just the page-specific part (e.g. "Blog") instead of
+    // repeating this suffix. Not applied to openGraph.title, which Next
+    // resolves separately — see withSiteSuffix() in lib/seo.ts.
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
     "Terapia psicológica individual, de pareja y para adolescentes con Laura Castro Cordero.",
   openGraph: {
     title: "Laura Castro Cordero | Psicóloga",
     description:
       "Terapia psicológica individual, de pareja y para adolescentes con Laura Castro Cordero.",
+    url: "/",
+    siteName: SITE_NAME,
     locale: "es_CR",
     type: "website",
   },

@@ -72,6 +72,13 @@ describe("query shape", () => {
     fetchMock.mockResolvedValue(null);
     expect(await getPostBySlug("no-existe")).toBeNull();
   });
+
+  it("getPostBySlug projects _updatedAt, needed for openGraph.modifiedTime", async () => {
+    fetchMock.mockResolvedValue(null);
+    await getPostBySlug("mi-post");
+    const [query] = fetchMock.mock.calls[0];
+    expect(query).toContain('"updatedAt": _updatedAt');
+  });
 });
 
 describe("getLatestPosts", () => {
