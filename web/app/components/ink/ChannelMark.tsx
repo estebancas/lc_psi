@@ -1,4 +1,4 @@
-const PATHS: Record<"whatsapp" | "phone" | "email", readonly string[]> = {
+const PATHS: Record<"whatsapp" | "phone" | "email" | "address", readonly string[]> = {
   whatsapp: [
     // chat bubble
     "M8,10 L40,10 Q46,10 46,16 L46,32 Q46,38 40,38 L18,38 L10,46 L11,38 L8,38 Q2,38 2,32 L2,16 Q2,10 8,10 Z",
@@ -14,13 +14,19 @@ const PATHS: Record<"whatsapp" | "phone" | "email", readonly string[]> = {
     "M4,12 L44,12 Q48,12 48,16 L48,38 Q48,42 44,42 L4,42 Q0,42 0,38 L0,16 Q0,12 4,12 Z",
     "M2,15 L24,30 L46,15",
   ],
+  address: [
+    // map-pin outline: rounded teardrop tapering to a point
+    "M25,4 C36,4 44,12 44,23 C44,36 25,46 25,46 C25,46 6,36 6,23 C6,12 14,4 25,4 Z",
+    // inner circle marking the pin's center
+    "M25,14 C30,14 34,18 34,23 C34,28 30,32 25,32 C20,32 16,28 16,23 C16,18 20,14 25,14 Z",
+  ],
 };
 
 export default function ChannelMark({
   kind,
   className,
 }: {
-  kind: "whatsapp" | "phone" | "email";
+  kind: "whatsapp" | "phone" | "email" | "address";
   className?: string;
 }) {
   return (

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Fraunces, Instrument_Sans } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { SITE_NAME } from "@/lib/seo";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import Analytics from "./components/Analytics";
 import "./globals.css";
 
@@ -19,7 +19,7 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://psicologalauracastro.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Laura Castro Cordero | Psicóloga",
     // Applied to every route's `title` string automatically — routes below

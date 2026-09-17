@@ -25,4 +25,20 @@ test.describe("contact channel links", () => {
       `mailto:${profile.email}`,
     );
   });
+
+  // NAP (Name/Address/Phone) consistency: the address rendered on-page must
+  // match the JSON-LD (see structured-data.spec.ts) and link out to the same
+  // coordinates, not just to a text search.
+  test("the consultorio address is visible and links to the coordinates on Google Maps", async ({
+    page,
+  }) => {
+    await page.goto("/#contacto");
+
+    const addressLink = page.getByRole("link", { name: new RegExp(profile.address.calle) });
+    await expect(addressLink).toBeVisible();
+    await expect(addressLink).toHaveAttribute(
+      "href",
+      `https://www.google.com/maps?q=${profile.geo.lat},${profile.geo.lng}`,
+    );
+  });
 });

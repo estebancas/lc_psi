@@ -11,6 +11,13 @@ test.describe("blog", () => {
     }
   });
 
+  test("shows a breadcrumb trail back to Inicio", async ({ page }) => {
+    await page.goto("/blog");
+    const breadcrumb = page.getByRole("navigation", { name: "Ruta de navegación" });
+    await expect(breadcrumb.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
+    await expect(breadcrumb.getByText("Blog")).toBeVisible();
+  });
+
   test("navigates to a post detail page", async ({ page }) => {
     const [firstPost] = posts;
     await page.goto("/blog");
@@ -25,6 +32,16 @@ test.describe("blog", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(firstPost.title);
     const detail = postsBySlug[firstPost.slug];
     await expect(page.getByRole("article")).toContainText(detail.body[0].children[0].text);
+  });
+
+  test("shows a 3-item breadcrumb trail ending in the post title", async ({ page }) => {
+    const [firstPost] = posts;
+    await page.goto(`/blog/${firstPost.slug}`);
+
+    const breadcrumb = page.getByRole("navigation", { name: "Ruta de navegación" });
+    await expect(breadcrumb.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
+    await expect(breadcrumb.getByRole("link", { name: "Blog" })).toHaveAttribute("href", "/blog");
+    await expect(breadcrumb.getByText(firstPost.title)).toBeVisible();
   });
 
   test("renders the post date as a formatted, machine-readable <time> element", async ({

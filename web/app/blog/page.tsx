@@ -4,8 +4,11 @@ import type { Metadata } from "next";
 import { getPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/format-date";
 import { pageSeo, withSiteSuffix } from "@/lib/seo";
+import { buildBreadcrumbSchema, type BreadcrumbItem } from "@/lib/schema";
 import PostListSkeleton from "@/app/components/PostListSkeleton";
 import PostTypeMark from "@/app/components/ink/PostTypeMark";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+import JsonLd from "@/app/components/JsonLd";
 
 const TITLE = "Blog";
 const DESCRIPTION = "Artículos y actualizaciones sobre salud mental y bienestar.";
@@ -15,6 +18,11 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   ...pageSeo({ path: "/blog", title: withSiteSuffix(TITLE), description: DESCRIPTION }),
 };
+
+const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
+  { name: "Inicio", path: "/" },
+  { name: "Blog", path: "/blog" },
+];
 
 async function PostGrid() {
   const posts = await getPosts();
@@ -53,6 +61,8 @@ async function PostGrid() {
 export default function BlogPage() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-[var(--space-section)]">
+      <JsonLd data={buildBreadcrumbSchema(BREADCRUMB_ITEMS)} />
+      <Breadcrumbs items={BREADCRUMB_ITEMS} />
       <h1 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] uppercase">Blog</h1>
 
       <div className="mt-10">
