@@ -79,6 +79,32 @@ describe("query shape", () => {
     const [query] = fetchMock.mock.calls[0];
     expect(query).toContain('"updatedAt": _updatedAt');
   });
+
+  it("getPostBySlug projects mainImage, seoTitle, seoDescription", async () => {
+    fetchMock.mockResolvedValue(null);
+    await getPostBySlug("mi-post");
+    const [query] = fetchMock.mock.calls[0];
+    expect(query).toContain("mainImage");
+    expect(query).toContain("seoTitle");
+    expect(query).toContain("seoDescription");
+  });
+
+  it("getProfile projects address, geo, openingHours, socialLinks, licenseNumber, credentials, priceRange", async () => {
+    fetchMock.mockResolvedValue(null);
+    await getProfile();
+    const [query] = fetchMock.mock.calls[0];
+    for (const field of [
+      "address",
+      "geo",
+      "openingHours",
+      "socialLinks",
+      "licenseNumber",
+      "credentials",
+      "priceRange",
+    ]) {
+      expect(query).toContain(field);
+    }
+  });
 });
 
 describe("getLatestPosts", () => {

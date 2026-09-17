@@ -42,6 +42,48 @@ export const post = defineType({
       validation: (Rule) => Rule.required().min(70).max(160),
     }),
     defineField({
+      name: 'seoTitle',
+      title: 'Título SEO (opcional)',
+      type: 'string',
+      description:
+        'Si se deja vacío, se usa el título del artículo. Úsalo solo si quieres un título distinto para buscadores.',
+      validation: (Rule) => Rule.max(70),
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Descripción SEO (opcional)',
+      type: 'text',
+      rows: 2,
+      description: 'Si se deja vacío, se usa el extracto del artículo.',
+      validation: (Rule) => Rule.max(160),
+    }),
+    defineField({
+      name: 'mainImage',
+      title: 'Imagen principal',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      description:
+        'Imagen mostrada al compartir este artículo en redes sociales. Si se deja vacía, se usa la imagen general del sitio.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Texto alternativo (accesibilidad y SEO)',
+          type: 'string',
+          description: 'Describe la imagen para personas con lectores de pantalla y para buscadores.',
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+      validation: (Rule) =>
+        Rule.custom((value: {alt?: string} | undefined) => {
+          if (value && !value.alt) {
+            return 'El texto alternativo es obligatorio cuando hay una imagen.'
+          }
+          return true
+        }),
+    }),
+    defineField({
       name: 'body',
       title: 'Contenido',
       type: 'array',

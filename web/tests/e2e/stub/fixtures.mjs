@@ -32,6 +32,19 @@ export const profile = {
   phone: "+506 7156 1628",
   whatsapp: "50671561628",
   footerTagline: "Terapia con un enfoque humano.",
+  address: {
+    calle: "Residencial Brisas Del Cerro, calle 12",
+    ciudad: "Nicoya",
+    provincia: "Guanacaste",
+    pais: "Costa Rica",
+  },
+  geo: {
+    lat: 10.137282,
+    lng: -85.458089,
+  },
+  socialLinks: [{ plataforma: "instagram", url: "https://instagram.com/psicologalauracastro" }],
+  credentials: "Colegio de Profesionales en Psicología de Costa Rica",
+  licenseNumber: "1234",
 };
 
 export const services = [
