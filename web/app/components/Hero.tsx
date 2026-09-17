@@ -37,7 +37,7 @@ export default async function Hero() {
         <div className="relative aspect-square w-56 flex-shrink-0 overflow-hidden rounded-full border-[1.5px] border-ink md:w-72">
           <Image
             src={photoUrl}
-            alt={profile?.name || "Foto de perfil"}
+            alt={profile?.heroPhoto?.alt || profile?.name || "Foto de perfil"}
             fill
             className="object-cover"
             priority

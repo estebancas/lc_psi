@@ -1,6 +1,30 @@
 import { defineQuery, type PortableTextBlock } from "next-sanity";
 import { client } from "@/lib/sanity/client";
 
+export type Address = {
+  calle: string;
+  ciudad: string;
+  provincia: string;
+  codigoPostal?: string;
+  pais: string;
+};
+
+export type Geo = {
+  lat: number;
+  lng: number;
+};
+
+export type OpeningHoursRange = {
+  dias: string[];
+  horaInicio?: string;
+  horaFin?: string;
+};
+
+export type SocialLink = {
+  plataforma: string;
+  url: string;
+};
+
 export type Profile = {
   name: string;
   profession?: string;
@@ -14,6 +38,13 @@ export type Profile = {
   phone?: string;
   whatsapp?: string;
   footerTagline?: string;
+  address?: Address;
+  geo?: Geo;
+  openingHours?: OpeningHoursRange[];
+  socialLinks?: SocialLink[];
+  licenseNumber?: string;
+  credentials?: string;
+  priceRange?: string;
 };
 
 const PROFILE_QUERY = defineQuery(
@@ -28,7 +59,14 @@ const PROFILE_QUERY = defineQuery(
     email,
     phone,
     whatsapp,
-    footerTagline
+    footerTagline,
+    address,
+    geo,
+    openingHours,
+    socialLinks,
+    licenseNumber,
+    credentials,
+    priceRange
   }`
 );
 
