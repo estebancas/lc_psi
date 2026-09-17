@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/posts";
-
-const SITE_URL = "https://psicologalauracastro.com";
+import { SITE_URL } from "@/lib/seo";
 
 // Next caches this route the same way it caches any other fetch-backed
 // route: getPosts() carries { next: { revalidate: 30 } } (see web/AGENTS.md

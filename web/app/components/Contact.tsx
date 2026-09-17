@@ -34,6 +34,21 @@ export default async function Contact() {
       href: `mailto:${email}`,
       external: false,
     },
+    ...(profile?.address
+      ? [
+          {
+            kind: "address" as const,
+            label: "Consultorio",
+            value: `${profile.address.calle}, ${profile.address.ciudad}, ${profile.address.provincia}`,
+            href: profile.geo
+              ? `https://www.google.com/maps?q=${profile.geo.lat},${profile.geo.lng}`
+              : `https://www.google.com/maps?q=${encodeURIComponent(
+                  `${profile.address.calle}, ${profile.address.ciudad}, ${profile.address.provincia}, ${profile.address.pais}`,
+                )}`,
+            external: true,
+          },
+        ]
+      : []),
   ];
 
   return (

@@ -1,5 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { SITE_NAME, articleSeo, pageSeo, withSiteSuffix } from "@/lib/seo";
+import { SITE_NAME, SITE_URL, absoluteUrl, articleSeo, pageSeo, withSiteSuffix } from "@/lib/seo";
+
+describe("absoluteUrl", () => {
+  it("resolves a relative path against the canonical site domain", () => {
+    expect(absoluteUrl("/blog")).toBe(`${SITE_URL}/blog`);
+  });
+
+  it("resolves the root path", () => {
+    expect(absoluteUrl("/")).toBe(`${SITE_URL}/`);
+  });
+});
 
 describe("withSiteSuffix", () => {
   it("appends the site name to a page title", () => {

@@ -5,8 +5,11 @@ import { PortableText } from "next-sanity";
 import { getPostBySlug, getPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/format-date";
 import { SITE_NAME, articleSeo, withSiteSuffix } from "@/lib/seo";
+import { buildBlogPostingSchema, buildBreadcrumbSchema, type BreadcrumbItem } from "@/lib/schema";
 import PostSkeleton from "@/app/components/PostSkeleton";
 import PostTypeMark from "@/app/components/ink/PostTypeMark";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
+import JsonLd from "@/app/components/JsonLd";
 import { portableTextComponents } from "@/app/components/portable-text";
 
 export async function generateStaticParams() {
@@ -58,8 +61,17 @@ async function BlogPostContent({
 
   if (!post) notFound();
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { name: "Inicio", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: post.title, path: `/blog/${post.slug}` },
+  ];
+
   return (
     <>
+      <JsonLd data={buildBlogPostingSchema(post)} />
+      <JsonLd data={buildBreadcrumbSchema(breadcrumbItems)} />
+      <Breadcrumbs items={breadcrumbItems} />
       <div className="flex items-center gap-2">
         <PostTypeMark type={post.type} className="h-5 w-5" />
         <p className="eyebrow">

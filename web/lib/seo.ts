@@ -7,6 +7,16 @@ import type { Metadata } from "next";
 export const SITE_NAME = "Laura Castro Cordero";
 const LOCALE = "es_CR";
 
+// Single source of truth for the canonical domain — app/layout.tsx's
+// metadataBase, app/sitemap.ts, and app/robots.ts each used to hardcode this
+// string independently. Centralized here so it can't drift.
+export const SITE_URL = "https://psicologalauracastro.com";
+
+/** Resolves a route path to an absolute URL against the site's canonical domain. */
+export function absoluteUrl(path: string): string {
+  return new URL(path, SITE_URL).toString();
+}
+
 /**
  * The root layout applies `title.template: "%s | Laura Castro Cordero"` to
  * the document `<title>`, but Next does not apply that template to
